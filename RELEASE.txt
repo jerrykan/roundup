@@ -49,37 +49,35 @@ Roundup release checklist:
       python setup.py build  (sdist generation will fail if this isn't done)
 8.  Rebuild documentation in "share/doc/roundup/html"
       python setup.py build_doc
-9.  python setup.py sdist --manifest-only
-    (ignore the 'warning: no previously-included ...' lines)
-10. Check the MANIFEST to make sure that any new files are included.
-      (use hg status --rev <last release or tag>:tip to list changed
-      added and removed files. Last release e.g. 1.5.1 where tip was
-      what would become 1.6) E.G.
+9.  python setup.py sdist
+    (if you find sdist a little verbose, add "--quiet" to the end of the
+     command)
+10. Check the roundup.egg-info/SOURCES.txt to make sure that any new files are
+    included.  (use hg status --rev <last release or tag>:tip to list changed
+    added and removed files. Last release e.g. 1.5.1 where tip was what would
+    become 1.6) E.G.
       
       hg status --rev 1.6.0:tip | sed -ne 's/^A //p' | while read i ; \
-      do echo $i; grep "$i" MANIFEST; done | uniq -c
+      do echo $i; grep "$i" roundup.egg-info/SOURCES.txt; done | uniq -c
 
     Anything with a count of 1 is not in the manifest.
     If there are missing files that should be in the manifest,
     edit MANIFEST.in to include them. For format docs see
-    http://docs.python.org/2/distutils/sourcedist.html#manifest-template
+    https://packaging.python.org/guides/using-manifest-in/#using-manifest-in
     (Notes files for the website and issue tracker shouldn't be in the
     manifest.)
-11. python setup.py sdist
-    (if you find sdist a little verbose, add "--quiet" to the end of the
-     command)
-12. Unpack the new tarball created in dist/roundup-<version>.tar.gz
+11. Unpack the new tarball created in dist/roundup-<version>.tar.gz
     file in /tmp then
       a) run tests using installed pytest run under python2 and
          python3. (python2 -m pytest test/; python3 -m pytest test/)
       b) demo.py
     with all available Python versions.
-13. Assuming all is well tag the release in the version-control
+12. Assuming all is well tag the release in the version-control
     system.
       a) hg tag 1.6.0  # use right version. Should create/commit a changeset
       b) hg push       # update main repo
       c) hg sum        # verify that the tag shows up
-14. Upload source distribution to PyPI - requires you sign up for a
+13. Upload source distribution to PyPI - requires you sign up for a
     pypi account and be added as a maintainer to roundup. Ask existing
     maintainer for access.
       python setup.py sdist upload --repository pypi --sign
@@ -87,13 +85,13 @@ Roundup release checklist:
     time. If you are using python older than 2.7.13 you need a
     .pypirc shown below. URL has changed. If using 2.7.13 or newer,
     you can remove the "--repository pypi" option.
-15. Send doc/announcement.txt to python-announce@python.org and
+14. Send doc/announcement.txt to python-announce@python.org and
     roundup-users@lists.sourceforge.net and
     roundup-devel@lists.sourceforge.net
-15b. Update entry on https://freshcode.club/projects/roundup-tracker
-15c. Update entries for fossies by emailing announcement to
+14b. Update entry on https://freshcode.club/projects/roundup-tracker
+14c. Update entries for fossies by emailing announcement to
      announce@fossies.org
-16. Refresh website.
+15. Refresh website.
       website/README.txt
       https://www.roundup-tracker.org/ should state that the stable
       version is the one that you released.

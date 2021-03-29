@@ -26,14 +26,7 @@ from roundup.dist.command.build import build, list_message_files
 from roundup.dist.command.bdist_rpm import bdist_rpm
 from roundup.dist.command.install_lib import install_lib
 
-# FIXME: setuptools breaks the --manifest-only option to setup.py and
-# doesn't seem to generate a MANIFEST file. Since I'm not familiar with
-# the way setuptools handles the files to include I'm commenting this
-# for now -- Ralf Schlatterbeck
-#try:
-#    from setuptools import setup
-#except ImportError:
-from distutils.core import setup
+from setuptools import setup
 
 import sys, os
 from glob import glob
