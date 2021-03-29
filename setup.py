@@ -21,7 +21,6 @@
 
 from __future__ import print_function
 from roundup.dist.command.build_doc import build_doc
-from roundup.dist.command.build_scripts import build_scripts
 from roundup.dist.command.build import build, list_message_files
 from roundup.dist.command.bdist_rpm import bdist_rpm
 from roundup.dist.command.install_lib import install_lib
@@ -155,7 +154,6 @@ def main():
 
           # Override certain command classes with our own ones
           cmdclass= {'build_doc': build_doc,
-                     'build_scripts': build_scripts,
                      'build': build,
                      'bdist_rpm': bdist_rpm,
                      'install_lib': install_lib,
